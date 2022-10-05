@@ -44,11 +44,6 @@ public with sharing class ConvertCSVToRecords {
           if(fieldList != '' && fieldLiest != null && fieldList.indexOf(fieldApiName) == -1) {
             continue;
           }
-          if (fieldMap.get(fieldApiName) == null) {
-            fieldApiName = fieldApiName.replaceAll('/', '_');
-            fieldApiName = fieldApiName.replaceAll(' ', '_').replaceAll('[^a-zA-Z0-9_]', ''); // Convert to alphanumeric and underscore
-            fieldApiName = fieldApiName.replaceAll('__', '_') + '__c'; // Remove extra _s and add __c to end
-          }
           fieldToFieldTypeMap.put(field, getFieldType(fieldMap, fieldApiName));
           fieldName.put(field, fieldApiName);
         }
