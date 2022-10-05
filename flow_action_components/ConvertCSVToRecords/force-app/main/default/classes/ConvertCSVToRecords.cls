@@ -41,6 +41,9 @@ public with sharing class ConvertCSVToRecords {
         Map<String, String> fieldName = new Map<String, String>();
         for (String field : fields) {
           String fieldApiName = field.trim(); //Since fieldnames will never contain spaces, we will always trim
+          if(fieldList != '' && fieldLiest != null && fieldList.indexOf(fieldApiName) == -1) {
+            continue;
+          }
           if (fieldMap.get(fieldApiName) == null) {
             fieldApiName = fieldApiName.replaceAll('/', '_');
             fieldApiName = fieldApiName.replaceAll(' ', '_').replaceAll('[^a-zA-Z0-9_]', ''); // Convert to alphanumeric and underscore
@@ -70,6 +73,9 @@ public with sharing class ConvertCSVToRecords {
             }
             Schema.DisplayType fieldType = fieldToFieldTypeMap.get(fields[i]);
             try {
+              if(fieldName.get(fields[i]) == null) {
+                continue;
+              }
               obj.put(
                 fieldName.get(fields[i]),
                 getConvertedFieldValue(fieldType, fieldValue, Tsep, Dsep, vCur, dateFormat)
@@ -264,6 +270,13 @@ public with sharing class ConvertCSVToRecords {
 
     @InvocableVariable(label='Object API Name' required=true)
     public String objectApiName;
+    
+     @InvocableVariable(
+      label='Fields'
+      description='Comma seperated list of fields to parse'
+      required=true
+    )
+    public String fieldList;
 
     @InvocableVariable(
       label='Separator 1: Fields'
