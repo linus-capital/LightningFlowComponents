@@ -305,6 +305,7 @@ public with sharing class ConvertCSVToRecordsTest {
     input.TSep = ',';
     input.DSep = '.';
     input.vCur = '$';
+    input.fieldList = '';
     flowInputs.add(input);
 
     return flowInputs;
